@@ -2,11 +2,9 @@ import React, {Component} from 'react';
 import axios from 'axios'
 import User from '../component/user'
 import Nav from '../component/nav'
+import {connect} from 'react-redux'
 
 class UserController extends Component {
-    state = {
-        users: null
-    }
 
     addFakeHandler = () => {
         axios.post('/user/addFake').then(res => {
@@ -26,17 +24,12 @@ class UserController extends Component {
 
     refresh = () => {
         axios.get('/user/list').then(res => {
-            if (this.state.users == null || this.state.users.length !== res.data.length){
-                console.log('set state');
-                this.setState({
-                    users: res.data
-                })
-            }
+            this.props.onLoad(res.data);
         }).catch(err => console.warn(err));
     }
 
     render(){
-        const usersComponent = !this.state.users ? null : this.state.users.map( (user, index) => {
+        const usersComponent = !this.props.users ? null : this.props.users.map( (user, index) => {
             return (
                 <User 
                 key={user.id}
@@ -58,4 +51,16 @@ class UserController extends Component {
     }
 }
 
-export default UserController;
+const mstp = (state) => {
+    return {
+        users: state.users
+    }
+}
+
+const mdtp = (dispatch) => {
+    return {
+        onLoad: (users) => {return dispatch({type: 'LOAD_USER', users: users})}
+    }
+}
+
+export default connect(mstp, mdtp)(UserController);

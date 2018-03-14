@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CardText, CardBody,
-    CardTitle, CardSubtitle, Button } from 'reactstrap';
+    CardTitle, CardSubtitle, Button } from 'reactstrap'; 
 
 const user = (props) => {
     const style = {
