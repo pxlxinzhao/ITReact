@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios'
 import User from '../component/user'
-// import Aux from '../component/aux'
 import Nav from '../component/nav'
 
-class Layout extends Component {
+class UserController extends Component {
     state = {
         users: null
     }
@@ -59,4 +58,4 @@ class Layout extends Component {
     }
 }
 
-export default Layout;
+export default UserController;
