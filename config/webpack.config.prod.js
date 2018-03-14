@@ -173,10 +173,11 @@ module.exports = {
                   fallback: {
                     loader: require.resolve('style-loader'),
                     options: {
-                      hmr: false,
-                      importLoaders: 1,
-                      modules: true,
-                      localIdentName: '[name]_[local]_[hash:base64:5]'
+                      hmr: false
+                      // ,
+                      // importLoaders: 1,
+                      // modules: true,
+                      // localIdentName: '[name]_[local]_[hash:base64:5]'
                     },
                   },
                   use: [
