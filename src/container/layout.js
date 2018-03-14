@@ -9,10 +9,6 @@ class Layout extends Component {
         users: null
     }
 
-
-
-
-
     addFakeHandler = () => {
         axios.post('/user/addFake').then(res => {
             this.refresh();

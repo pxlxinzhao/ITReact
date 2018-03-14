@@ -1,12 +1,8 @@
 import React from 'react';
 import {
-  Collapse,
   Button,
   Navbar,
-  NavbarToggler,
   NavbarBrand,
-  Nav,
-  NavItem
 } from 'reactstrap';
 
 class NavigationBar extends React.Component {
@@ -24,18 +20,18 @@ class NavigationBar extends React.Component {
     });
   }
   render() {
+    const btnStyle = {
+      float: 'right',
+      width: '80px',
+      position: 'absolute',
+      right: '0px'
+    }
+
     return (
       <div>
         <Navbar color="faded" light expand="md">
           <NavbarBrand href="/">CONTACTS</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <Button color="primary" onClick={this.props.onClick}>Add</Button>
-              </NavItem>
-            </Nav>
-          </Collapse>
+          <Button style={btnStyle} color="primary" onClick={this.props.onClick}>Add</Button>
         </Navbar>
       </div>
     );
