@@ -3,8 +3,13 @@ import axios from 'axios'
 import User from '../component/user'
 import Nav from '../component/nav'
 import {connect} from 'react-redux'
+import Loader from '../component/loader'
 
 class UserController extends Component {
+
+    state = {
+        isLoading: false
+    }
 
     addFakeHandler = () => {
         axios.post('/user/addFake').then(res => {
@@ -23,8 +28,10 @@ class UserController extends Component {
     }
 
     refresh = () => {
+        this.state.isLoading = true;
         axios.get('/user/list').then(res => {
             this.props.onLoad(res.data);
+            this.setState({...this.state, isLoading: false});
         }).catch(err => console.warn(err));
     }
 
@@ -45,7 +52,7 @@ class UserController extends Component {
         return (
             <div className="container">
                 <Nav onClick={this.addFakeHandler}/>
-                {usersComponent}
+                {this.state.isLoading ? <Loader/> : usersComponent}
             </div>
         )
     }
