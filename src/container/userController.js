@@ -2,10 +2,13 @@ import React, {Component} from 'react';
 import axios from 'axios'
 import User from '../component/user'
 import Nav from '../component/nav'
+import {connect} from 'react-redux'
+import Loader from '../component/loader'
 
 class UserController extends Component {
+
     state = {
-        users: null
+        isLoading: false
     }
 
     addFakeHandler = () => {
@@ -25,18 +28,15 @@ class UserController extends Component {
     }
 
     refresh = () => {
+        this.state.isLoading = true;
         axios.get('/user/list').then(res => {
-            if (this.state.users == null || this.state.users.length !== res.data.length){
-                console.log('set state');
-                this.setState({
-                    users: res.data
-                })
-            }
+            this.props.onLoad(res.data);
+            this.setState({...this.state, isLoading: false});
         }).catch(err => console.warn(err));
     }
 
     render(){
-        const usersComponent = !this.state.users ? null : this.state.users.map( (user, index) => {
+        const usersComponent = !this.props.users ? null : this.props.users.map( (user, index) => {
             return (
                 <User 
                 key={user.id}
@@ -52,10 +52,22 @@ class UserController extends Component {
         return (
             <div className="container">
                 <Nav onClick={this.addFakeHandler}/>
-                {usersComponent}
+                {this.state.isLoading ? <Loader/> : usersComponent}
             </div>
         )
     }
 }
 
-export default UserController;
+const mstp = (state) => {
+    return {
+        users: state.users
+    }
+}
+
+const mdtp = (dispatch) => {
+    return {
+        onLoad: (users) => {return dispatch({type: 'LOAD_USER', users: users})}
+    }
+}
+
+export default connect(mstp, mdtp)(UserController);
