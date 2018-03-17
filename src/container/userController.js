@@ -28,7 +28,7 @@ class UserController extends Component {
     }
 
     refresh = () => {
-        this.state.isLoading = true;
+        this.setState({...this.state, isLoading: true});
         axios.get('/user/list').then(res => {
             this.props.onLoad(res.data);
             this.setState({...this.state, isLoading: false});
